@@ -1,0 +1,108 @@
+src/main/java/com../firstController
+
+package com.example.firstapp;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class FirstController {
+    @GetMapping("/Welcome")
+    public String helloWorld(){
+        return"Welcome";
+    }
+    @GetMapping("/welcome2")
+    public String welcome2(@RequestParam String name){
+        return"welcome2 " +name;
+    }
+
+    @GetMapping("/Welcome3/{a}")
+    public String Welcome3(@PathVariable String a){
+        return "Welcome "+a;
+    }
+
+}
+
+-------
+
+firstApplication
+
+package com.example.firstapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class FirstappApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(FirstappApplication.class, args);
+	}
+
+}
+
+
+to run:
+localhost:8080/Welcome3/apple
+
+
+Welcome apple
+
+
+======================================================================
+print the summation of two numbers
+
+package com.example.firstapp;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/day1")
+public class FirstController {
+
+     @GetMapping("/Welcome4/{x}/{y}")
+    public String Welcome4(@PathVariable int x , @PathVariable int y){
+        return "sum =" +(x+y) ;
+    }
+
+}
+
+to run:
+http://localhost:8080/day1/Welcome4/10/20
+
+sum =30
+
+======================================================================
+
+new-> java class-> Student
+
+package com.example.firstapp;
+
+public class Student {
+    private int age;
+    private String name;
+
+    public Student(int age, String name){
+        this.age=age;
+        this.name=name;
+    }
+
+    public int getAge(){
+        return age;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setAge(int age){
+        this.age = age;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+}
+
