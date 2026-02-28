@@ -1,0 +1,167 @@
+right click on project name --
+	new -> packages -> type as 'Model'
+	package com.example.firstapp.model;
+	
+	inside the model right click on model create a product java class
+	new -> javaclass -> type as 'Product'
+
+model/product.java :-
+
+public class Product {
+    private String name;
+    private int quantity;
+    private double price;
+
+    public Product(String name, int quantity, Double price){
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getQuantity(){
+        return quantity;
+    }
+
+    public double getPrice(){
+        return price;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
+    public void setPrice(double price){
+        this.price = price;
+    }
+}
+
+------------------------
+
+in the project create another package model as Controller
+
+inside the controller create javaclass as ProductController
+
+controller/ProductController.java :-
+
+package com.example.firstapp.controller;
+
+import com.example.firstapp.model.Product;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class ProductController {
+    //int [] product = new int[5]; //array creation
+
+    private List<Product> Products = new ArrayList<>();
+
+    @PostMapping("/postproduct")
+
+    public String postProduct(@RequestBody Product products1){
+
+        Products.add(products1);
+        return "Successfully added";
+    }
+
+}
+
+run & open the postman
+
+selct post -> enter the url
+			localhost:8080/postproduct 
+			
+			in bellow click  body -> row -> text(JSON)
+			type:-
+				{ 	"name": "izla",
+					"quantity" : 5,
+					"price" : 200.00
+				}
+				
+			and send
+			
+get API:-
+
+    //inside above the code
+    @GetMapping("/getProduct1")
+    public List<Product> getAllProducts(){
+        return Products;
+    }
+	
+	in postman 
+		Get-> localhost:8080/getProduct1
+		
+===================================
+final controller/ProductController
+
+package com.example.firstapp.controller;
+
+import com.example.firstapp.model.Product;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class ProductController {
+    //int [] product = new int[5]; //array creation
+
+    private List<Product> Products = new ArrayList<>();
+
+    @PostMapping("/postproduct")
+    public String postProduct(@RequestBody Product products1)
+    {
+        if(products1.getQuantity() < 0)
+        {
+            return "Give positive value";
+        }
+        
+        Products.add(products1);
+        return "Successfully added";
+    }
+
+    @GetMapping("/getProduct1")
+    public List<Product> getAllProducts(){
+        return Products;
+    }
+
+
+
+
+}
+
+===================================		
+			
+for if condition validate:-
+
+post the data with neg quantity
+{ "name": "izla",
+  "quantity" : -5,
+  "price" : 200.00
+
+}
+
+
+
+it will return:- 
+Give positive value
+
+
+
+
+
+
+	
