@@ -1,0 +1,73 @@
+right click on project name --
+	new -> packages -> type as 'Service'
+	package com.example.firstapp.Service;
+	on that create a class on that service layer as ProductService
+	
+--------------------------------------------------------------------------------
+	Service-> ProdcutService:-
+	
+package com.example.firstapp.Service;
+
+import com.example.firstapp.model.Product;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class ProductService {
+    private List<Product> products = new ArrayList<>();
+
+    // Add product
+    public void postProduct(Product product) {
+        products.add(product);
+    }
+
+    // Delete product
+    public void deleteProduct(Product product) {
+        products.remove(product);
+    }
+
+    // Get all products
+    public List<Product> getAllProducts() {
+        return products;
+    }
+}
+
+
+	
+--------------------------------------------------------------------------------
+Controller->ProductController:-
+	
+package com.example.firstapp.controller;
+
+import com.example.firstapp.Service.ProductService;
+import com.example.firstapp.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class ProductController {
+
+    @Autowired
+    private ProductService productService;
+
+    @PostMapping("/postproduct")
+    public String postProduct(@RequestBody Product product) {
+        productService.postProduct(product);
+        return "Successfully added";
+    }
+
+    @GetMapping("/getProducts")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @DeleteMapping("/deleteProduct")
+    public String deleteProduct(@RequestBody Product product) {
+        productService.deleteProduct(product);
+        return "Successfully deleted";
+    }
+}
